@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Check a URL</h1>
+<form method="post" class="card">
+  <input type="text" name="url" placeholder="https://example.com/login" required>
+  <button type="submit">Analyze</button>
+</form>
+
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+{% if result %}
+<div class="card result {{ result.verdict|lower }}">
+  <h2>{{ result.verdict }} &mdash; {{ result.score }}/100</h2>
+  <p class="url">{{ result.url }}</p>
+  <div class="bar"><div class="fill" style="width: {{ result.score }}%"></div></div>
+  {% if result.reasons %}
+  <ul>{% for r in result.reasons %}<li>{{ r }}</li>{% endfor %}</ul>
+  {% else %}
+  <p>No red flags found.</p>
+  {% endif %}
+</div>
+{% endif %}
+
+<h2>Check many URLs</h2>
+<form method="post" action="{{ url_for('bulk') }}" class="card">
+  <textarea name="urls" rows="5" placeholder="One URL per line (max 50)"></textarea>
+  <button type="submit">Analyze all</button>
+</form>
+{% endblock %}

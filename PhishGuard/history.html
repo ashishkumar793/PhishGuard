@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Scan history</h1>
+<p class="filters">
+  Filter:
+  <a href="{{ url_for('history') }}">All</a> |
+  <a href="{{ url_for('history', verdict='SAFE') }}">Safe</a> |
+  <a href="{{ url_for('history', verdict='SUSPICIOUS') }}">Suspicious</a> |
+  <a href="{{ url_for('history', verdict='DANGEROUS') }}">Dangerous</a>
+</p>
+{% if scans %}
+<table>
+  <tr><th>Time</th><th>URL</th><th>Score</th><th>Verdict</th><th>Reasons</th></tr>
+  {% for s in scans %}
+  <tr>
+    <td>{{ s.scanned_at }}</td><td>{{ s.url }}</td><td>{{ s.score }}</td>
+    <td class="tag {{ s.verdict|lower }}">{{ s.verdict }}</td>
+    <td>{{ s.reasons|join('; ') or '-' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<form method="post" action="{{ url_for('clear') }}">
+  <button class="danger" type="submit">Clear history</button>
+</form>
+{% else %}
+<p>No scans yet.</p>
+{% endif %}
+{% endblock %}

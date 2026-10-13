@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Statistics</h1>
+<div class="grid">
+  <div class="card"><h3>Total scans</h3><p class="big">{{ stats.total }}</p></div>
+  <div class="card"><h3>Average score</h3><p class="big">{{ stats.average }}</p></div>
+  {% for v in ['SAFE', 'SUSPICIOUS', 'DANGEROUS'] %}
+  <div class="card"><h3>{{ v|title }}</h3><p class="big">{{ stats.by_verdict.get(v, 0) }}</p></div>
+  {% endfor %}
+</div>
+<h2>Highest-risk URLs</h2>
+{% if stats.top %}
+<table>
+  <tr><th>URL</th><th>Score</th></tr>
+  {% for t in stats.top %}<tr><td>{{ t.url }}</td><td>{{ t.score }}</td></tr>{% endfor %}
+</table>
+{% else %}<p>No data yet.</p>{% endif %}
+{% endblock %}

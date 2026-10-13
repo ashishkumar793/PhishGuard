@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Bulk results</h1>
+{% if results %}
+<table>
+  <tr><th>URL</th><th>Score</th><th>Verdict</th></tr>
+  {% for r in results %}
+  <tr><td>{{ r.url }}</td><td>{{ r.score }}</td>
+      <td class="tag {{ r.verdict|lower }}">{{ r.verdict }}</td></tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No valid URLs were submitted.</p>
+{% endif %}
+<p><a href="{{ url_for('index') }}">&larr; Back</a></p>
+{% endblock %}

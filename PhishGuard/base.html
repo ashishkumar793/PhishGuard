@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhishGuard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav>
+    <span class="brand">PhishGuard</span>
+    <a href="{{ url_for('index') }}">Check URL</a>
+    <a href="{{ url_for('history') }}">History</a>
+    <a href="{{ url_for('stats') }}">Statistics</a>
+  </nav>
+  <main>{% block content %}{% endblock %}</main>
+  <footer>Educational project. Rule-based detection can be wrong.</footer>
+</body>
+</html>
